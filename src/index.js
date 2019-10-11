@@ -1,7 +1,6 @@
-import Router from './controllers/APIController';
-import Spotify from './models/Spotify';
+import router from './controllers/APIController';
+import https from 'https';
+const port = 3000;
 
-Spotify.test();
-console.log('Now listening on port 3000...');
-Router.listen(3000);
-
+console.log(`Now listening on port ${port}...`);
+router.listen(port);
