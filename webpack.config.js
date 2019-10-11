@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: ['@babel/polyfill', './src/index.js'],
@@ -10,6 +11,9 @@ module.exports = {
   mode: 'development',
   target: 'node',
   externals: [nodeExternals()],
+  plugins:[
+    new Dotenv()
+  ],
   module: {
     rules: [
       {

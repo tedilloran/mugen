@@ -1,8 +1,15 @@
 const Koa = require('koa');
-const Router = new Koa();
+const Router = require('koa-router');
 
-Router.use(async ctx => {
+const app = new Koa();
+const router = new Router();
+
+router.use(async ctx => {
   ctx.body = 'Hello World!';
 });
 
-export default Router;
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
+
+export default app;
