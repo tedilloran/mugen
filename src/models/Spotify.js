@@ -14,6 +14,7 @@ class Spotify {
       this.expirationDate = null;
       this.accessToken = null;
       this.tokenType = null;
+      this.axiosInstance = null;
       (async () => {
         console.log('Getting Spotify access token...');
         let res = await axios.request({
@@ -39,6 +40,7 @@ class Spotify {
     this.setExpirationDate(tokenDuration);
     this.setAccessToken(accessToken);
     this.setTokenType(tokenType);
+    this.setAxiosInstance();
   }
 
   setExpirationDate (tokenDuration) {
@@ -61,36 +63,34 @@ class Spotify {
     }
   }
 
+  setAxiosInstance () {
+    if (!this.axiosInstance) {
+      this.axiosInstance = axios.create({
+        baseURL: 'https://api.spotify.com/v1/',
+        headers: {
+          'Authorization': `Bearer ${this.accessToken}`,
+        }
+      });
+    }
+  }
+
   getTracks (idList) {
     return `Spotify Model: Tracks for ${idList}`;
   }
 
   async getTrack (id) {
-    try {
-      console.log(`Getting track information for ID: ${id}`);
-      let res = await axios.request({
-        url: `https://api.spotify.com/v1/tracks/${id}`,
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${this.accessToken}`,
-        }
-      });
-      console.log(`Displaying track information for ID: ${id}`);
-      const { data } = res;
-      console.log(data);
-    } catch(err) {
-      console.log(`Unable to get track information for ID: ${id}`);
-      console.log(err.response);
-    }
-    return `Spotify Model: track for ${id}`;
+    console.log(`Getting track information for ID: ${id}`);
+    return await this.axiosInstance.get(`tracks/${id}`);
   }
   
   getTrackAudioAnalysis (id) {
-    return `Spotify Model: Track audio analysis for ${id}`;
+    console.log(`Getting track audio analysis for ID: ${id}`);
+    return await this.axiosInstance.get(`audio-analysis/${id}`);
   }
 
   getTrackAudioFeatures (id) {
-    return `Spotify Model: Track audio features for ${id}`;
+    console.log(`Getting track audio features for ID: ${id}`);
+    return await this.axiosInstance.get(`audio-features/${id}`);
   }
 
   getTracksAudioFeatures (idList) {
@@ -98,15 +98,18 @@ class Spotify {
   }
 
   getArtist (id) {
-    return `Spotify Model: Artist for ${id}`;
+    console.log(`Getting artist for ID: ${id}`);
+    return await this.axiosInstance.get(`artists/${id}`);
   }
 
   getAlbum (id) {
-    return `Spotify Model: Album for ${id}`;
+    console.log(`Getting album for ID: ${id}`);
+    return await this.axiosInstance.get(`albums/${id}`);
   }
 
   getCategory (id) {
-    return `Spotify Model: Category for ${id}`;
+    console.log(`Getting category for ID: ${id}`);
+    return await this.axiosInstance.get(`browse/categories/${id}`);
   }
 
   getPlaylist (id) {

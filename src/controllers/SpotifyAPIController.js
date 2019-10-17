@@ -8,9 +8,17 @@ SpotifyController.get('/browse/:id', (ctx, next) => {
   ctx.body = `/browse/${id}`;
 });
 
-SpotifyController.get('/track/:id', (ctx, next) => {
+SpotifyController.get('/track/:id', async (ctx, next) => {
   const { id } = ctx.params;
-  ctx.body = Spotify.getTrack(id);
+  try {
+    const res = await Spotify.getTrack(id);
+    const { data } = res;
+    console.log(data);
+    ctx.body = data;
+  } catch(err) {
+    console.log(err);
+    ctx.body = `Unable to get track information for track ID: ${id}`;
+  };
 });
 
 SpotifyController.get('/tracks/:idList', (ctx, next) => {
