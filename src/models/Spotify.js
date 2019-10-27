@@ -74,6 +74,15 @@ class Spotify {
     }
   }
 
+  async search (query, type) {
+    return await this.axiosInstance.get('search', {
+      params: {
+        query: query,
+        type: type
+      }
+    });
+  }
+
   getTracks (idList) {
     return `Spotify Model: Tracks for ${idList}`;
   }
@@ -83,12 +92,12 @@ class Spotify {
     return await this.axiosInstance.get(`tracks/${id}`);
   }
   
-  getTrackAudioAnalysis (id) {
+  async getTrackAudioAnalysis (id) {
     console.log(`Getting track audio analysis for ID: ${id}`);
     return await this.axiosInstance.get(`audio-analysis/${id}`);
   }
 
-  getTrackAudioFeatures (id) {
+  async getTrackAudioFeatures (id) {
     console.log(`Getting track audio features for ID: ${id}`);
     return await this.axiosInstance.get(`audio-features/${id}`);
   }
@@ -97,17 +106,17 @@ class Spotify {
     return `Spotify Model: Tracks audio features for ${idList}`;
   }
 
-  getArtist (id) {
+  async getArtist (id) {
     console.log(`Getting artist for ID: ${id}`);
     return await this.axiosInstance.get(`artists/${id}`);
   }
 
-  getAlbum (id) {
+  async getAlbum (id) {
     console.log(`Getting album for ID: ${id}`);
     return await this.axiosInstance.get(`albums/${id}`);
   }
 
-  getCategory (id) {
+  async getCategory (id) {
     console.log(`Getting category for ID: ${id}`);
     return await this.axiosInstance.get(`browse/categories/${id}`);
   }
