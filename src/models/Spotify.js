@@ -75,11 +75,17 @@ class Spotify {
   }
 
   async search (query, type) {
+    console.log(query);
+    console.log(type);
     return await this.axiosInstance.get('search', {
       params: {
-        query: query,
-        type: type
+        'q': query
+      },
+      data: {
+        'type': type
       }
+    }).catch((err) => {
+      console.log(err);
     });
   }
 

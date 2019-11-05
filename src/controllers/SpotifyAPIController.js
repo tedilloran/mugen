@@ -4,6 +4,26 @@ const Router = require('koa-router');
 const SpotifyController = new Router();
 const SpotifySearchController = new Router();
 
+SpotifySearchController.get('/', (ctx, next) => {
+  const { query } = ctx;
+  ctx.body = Spotify.search(query.q, 'album,artist,track');
+});
+
+SpotifySearchController.get('/album', (ctx, next) => {
+  const { query } = ctx;
+  ctx.body = Spotify.search(query.q, 'album');
+});
+
+SpotifySearchController.get('/artist', (ctx, next) => {
+  const { query } = ctx;
+  ctx.body = Spotify.search(query.q, 'artist');
+});
+
+SpotifySearchController.get('/track', (ctx, next) => {
+  const { query } = ctx;
+  ctx.body = Spotify.search(query.q, 'track');
+});
+
 SpotifyController.get('/browse/:id', (ctx, next) => {
   const { id } = ctx.params;
   ctx.body = `/browse/${id}`;
@@ -22,25 +42,6 @@ SpotifyController.get('/track/:id', async (ctx, next) => {
   };
 });
 
-SpotifySearchController.get('/', (ctx, next) => {
-  const { query } = ctx;
-  ctx.body = Spotify.search(query, null);
-});
-
-SpotifySearchController.get('/album', (ctx, next) => {
-  const { query } = ctx;
-  ctx.body = Spotify.search(query, 'album');
-});
-
-SpotifySearchController.get('/artist', (ctx, next) => {
-  const { query } = ctx;
-  ctx.body = Spotify.search(query, 'artist');
-});
-
-SpotifySearchController.get('/track', (ctx, next) => {
-  const { query } = ctx;
-  ctx.body = Spotify.search(query, 'track');
-});
 
 SpotifyController.get('/tracks/:idList', (ctx, next) => {
   const { idList } = ctx.params;
