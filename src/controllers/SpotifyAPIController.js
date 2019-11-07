@@ -4,9 +4,15 @@ const Router = require('koa-router');
 const SpotifyController = new Router();
 const SpotifySearchController = new Router();
 
-SpotifySearchController.get('/', (ctx, next) => {
+SpotifySearchController.get('/', async (ctx, next) => {
   const { query } = ctx;
-  ctx.body = Spotify.search(query.q, 'album,artist,track');
+  await Spotify.search(query.q, 'album,artist,track')
+    .then((res) => {
+      ctx.body = res.data;
+    }).catch((err) => {
+      // TODO: Figure out some error handling ASAP
+      console.log(err);
+    });
 });
 
 SpotifySearchController.get('/album', (ctx, next) => {

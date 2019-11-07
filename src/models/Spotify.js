@@ -74,18 +74,12 @@ class Spotify {
     }
   }
 
-  async search (query, type) {
-    console.log(query);
-    console.log(type);
-    return await this.axiosInstance.get('search', {
+  search (query, type) {
+    return this.axiosInstance.get('search', {
       params: {
-        'q': query
-      },
-      data: {
+        'query': query,
         'type': type
       }
-    }).catch((err) => {
-      console.log(err);
     });
   }
 
