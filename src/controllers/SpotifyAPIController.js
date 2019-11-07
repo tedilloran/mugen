@@ -11,23 +11,43 @@ SpotifySearchController.get('/', async (ctx, next) => {
       ctx.body = res.data;
     }).catch((err) => {
       // TODO: Figure out some error handling ASAP
+      // ! Remove console logs, these can hurt performance if printing them all
       console.log(err);
+      ctx.body = 'Something went wrong!';
     });
 });
 
-SpotifySearchController.get('/album', (ctx, next) => {
+SpotifySearchController.get('/album', async (ctx, next) => {
   const { query } = ctx;
-  ctx.body = Spotify.search(query.q, 'album');
+  await Spotify.search(query.q, 'album')
+    .then((res) => {
+      ctx.body = res.data;
+    }).catch((err) => {
+      console.log(err);
+      ctx.body = 'Something went wrong!';
+    });
 });
 
-SpotifySearchController.get('/artist', (ctx, next) => {
+SpotifySearchController.get('/artist', async (ctx, next) => {
   const { query } = ctx;
-  ctx.body = Spotify.search(query.q, 'artist');
+  await Spotify.search(query.q, 'artist')
+    .then((res) => {
+      ctx.body = res.data;
+    }).catch((err) => {
+      console.log(err);
+      ctx.body = 'Something went wrong!';
+    });
 });
 
-SpotifySearchController.get('/track', (ctx, next) => {
+SpotifySearchController.get('/track', async (ctx, next) => {
   const { query } = ctx;
-  ctx.body = Spotify.search(query.q, 'track');
+  await Spotify.search(query.q, 'track')
+    .then((res) => {
+      ctx.body = res.data;
+    }).catch((err) => {
+      console.log(err);
+      ctx.body = 'Something went wrong!';
+    });
 });
 
 SpotifyController.get('/browse/:id', (ctx, next) => {
